@@ -6,13 +6,11 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publishing:patch": "pnpm run publishing:check && pnpm run publishing:prepareFiles && cd ./dist && npm version patch && pnpm run publishing:push && pnpm run publishing:cleanup",
-    "publishing:minor": "pnpm run publishing:check && pnpm run publishing:prepareFiles && cd ./dist && npm version minor && pnpm run publishing:push && pnpm run publishing:cleanup",
-    "publishing:major": "pnpm run publishing:check && pnpm run publishing:prepareFiles && cd ./dist && npm version major && pnpm run publishing:push && pnpm run publishing:cleanup",
+    "publishing:patch": "pnpm run publishing:check && pnpm run publishing:prepareFiles && cd ./dist && npm version patch && npm publish && cd ../ && rm -rf ./dist",
+    "publishing:minor": "pnpm run publishing:check && pnpm run publishing:prepareFiles && cd ./dist && npm version minor && npm publish && cd ../ && rm -rf ./dist",
+    "publishing:major": "pnpm run publishing:check && pnpm run publishing:prepareFiles && cd ./dist && npm version major && npm publish && cd ../ && rm -rf ./dist",
     "publishing:check": "git diff --exit-code --name-only && git checkout master && git pull",
-    "publishing:prepareFiles": "cp -r ./packages/next-page-builder ./dist",
-    "publishing:push": "npm publish",
-    "publishing:cleanup": "cd ../ && rm -rf ./dist"
+    "publishing:prepareFiles": "cp -r ./packages/next-page-builder ./dist"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
