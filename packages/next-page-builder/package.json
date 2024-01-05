@@ -1,10 +1,19 @@
 {
   "name": "next-page-builder",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.0",
+  "description": "A system to easily allow users on your site to create content without the need for a CMS. Made for Next.js 14.0.0+",
   "private": false,
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Mitchellston"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitchellston/next-page-builder"
+  },
+  "bugs": {
+    "url": "https://github.com/mitchellston/next-page-builder/issues"
+  },
   "license": "MIT",
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
