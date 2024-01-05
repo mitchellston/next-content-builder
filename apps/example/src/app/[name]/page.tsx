@@ -1,4 +1,4 @@
-import { FullContent } from "next-page-builder";
+import { FullContent } from "next-content-builder";
 import { test } from "../../contentTypes/test";
 
 export default function testPages(pageVars: any) {

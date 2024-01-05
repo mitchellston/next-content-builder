@@ -1,6 +1,6 @@
 import "server-only";
 import { test } from "../../../contentTypes/test";
-import { Editor } from "next-page-builder";
+import { Editor } from "next-content-builder";
 import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { Textarea } from "../../../components/ui/textarea";

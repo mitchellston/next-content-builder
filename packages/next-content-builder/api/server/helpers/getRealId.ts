@@ -11,11 +11,15 @@ export async function getRealId<T extends ContentType>(
   let contentId: null | string | number = await unstable_cache(
     async () => null,
     [
-      `next-page-builder-contentType-${contentType.name}-content-key`,
-      `next-page-builder-contentType-${contentType.name}-${JSON.stringify(id)}`,
+      `next-content-builder-contentType-${contentType.name}-content-key`,
+      `next-content-builder-contentType-${contentType.name}-${JSON.stringify(
+        id
+      )}`,
     ],
     {
-      tags: [`next-page-builder-contentType-${contentType.name}-content-key`],
+      tags: [
+        `next-content-builder-contentType-${contentType.name}-content-key`,
+      ],
     }
   )();
   // if the id is null then it will get the id from the database and cache it
@@ -23,13 +27,15 @@ export async function getRealId<T extends ContentType>(
     contentId = await unstable_cache(
       async () => await contentType.databaseProvider.getContentId(id),
       [
-        `next-page-builder-contentType-${contentType.name}-content-key`,
-        `next-page-builder-contentType-${contentType.name}-${JSON.stringify(
+        `next-content-builder-contentType-${contentType.name}-content-key`,
+        `next-content-builder-contentType-${contentType.name}-${JSON.stringify(
           id
         )}`,
       ],
       {
-        tags: [`next-page-builder-contentType-${contentType.name}-content-key`],
+        tags: [
+          `next-content-builder-contentType-${contentType.name}-content-key`,
+        ],
       }
     )();
   // if the id is still null then it will return false

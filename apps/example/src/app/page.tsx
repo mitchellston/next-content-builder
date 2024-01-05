@@ -1,4 +1,4 @@
-import { Search } from "next-page-builder";
+import { Search } from "next-content-builder";
 import { test } from "~/contentTypes/test";
 import { infiniteSearchComponent } from "./infiniteSearchComponent";
 

@@ -91,11 +91,11 @@ export async function createContent<T extends ContentType>(
   if (id instanceof Error) throw id;
 
   // Revalidate the cache
-  revalidateTag(`next-page-builder-contentType-${contentType.name}-${id}`); // revalidate the page
+  revalidateTag(`next-content-builder-contentType-${contentType.name}-${id}`); // revalidate the page
   revalidateTag(
-    `next-page-builder-contentType-${contentType.name}-content-key`
+    `next-content-builder-contentType-${contentType.name}-content-key`
   ); // Revalidate the content key (used to get the real id)
-  revalidateTag(`next-page-builder-contentType-${contentType.name}-search`); // revalidate the search
+  revalidateTag(`next-content-builder-contentType-${contentType.name}-search`); // revalidate the search
 
   // Execute the afterCreatingContent middleware if it exists
   try {

@@ -1,5 +1,5 @@
 import "server-only";
-import { contentType } from "next-page-builder/contentType";
+import { contentType } from "next-content-builder/contentType";
 import { prisma } from "~/server/db";
 
 export const test = contentType(

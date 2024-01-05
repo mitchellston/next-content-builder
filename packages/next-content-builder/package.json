@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mitchellston/next-page-builder"
+    "url": "git+https://github.com/mitchellston/next-content-builder"
   },
   "bugs": {
-    "url": "https://github.com/mitchellston/next-page-builder/issues"
+    "url": "https://github.com/mitchellston/next-content-builder/issues"
   },
   "license": "MIT",
   "devDependencies": {

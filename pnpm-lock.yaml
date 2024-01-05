@@ -41,9 +41,9 @@ importers:
       next:
         specifier: ^14.0.3
         version: 14.0.3(react-dom@18.2.0)(react@18.2.0)
-      next-page-builder:
+      next-content-builder:
         specifier: workspace:*
-        version: link:../../packages/next-page-builder
+        version: link:../../packages/next-content-builder
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -100,7 +100,7 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
 
-  packages/next-page-builder:
+  packages/next-content-builder:
     dependencies:
       databaseProviders:
         specifier: workspace:*

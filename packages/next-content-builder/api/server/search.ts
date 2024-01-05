@@ -32,7 +32,7 @@ export async function search<
           cursor: "cursor" in settings ? settings.cursor : undefined,
         })) as ReturnType<T, R, V>,
       [
-        `next-page-builder-contentType-${
+        `next-content-builder-contentType-${
           contentType.name
         }-search-${JSON.stringify(settings)}-${JSON.stringify(
           search
@@ -40,8 +40,8 @@ export async function search<
       ],
       {
         tags: [
-          `next-page-builder-contentType-${contentType.name}-search`,
-          `next-page-builder-contentType-${
+          `next-content-builder-contentType-${contentType.name}-search`,
+          `next-content-builder-contentType-${
             contentType.name
           }-search-${JSON.stringify(settings)}-${JSON.stringify(
             search

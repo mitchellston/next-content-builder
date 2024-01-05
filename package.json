@@ -6,11 +6,11 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publishing:patch": "pnpm run publishing:check && cd ./packages/next-page-builder && npm version patch && git commit --m 'new major version' -a && git push && cd ../../ && pnpm run publishing:prepareFiles && cd ./dist && npm publish && cd ../ && rm -rf ./dist",
-    "publishing:minor": "pnpm run publishing:check && cd ./packages/next-page-builder && npm version minor && git commit --m 'new major version' -a && git push && cd ../../ && pnpm run publishing:prepareFiles && cd ./dist && npm publish && cd ../ && rm -rf ./dist",
-    "publishing:major": "pnpm run publishing:check && cd ./packages/next-page-builder && npm version major && git commit --m 'new major version' -a && git push && cd ../../ && pnpm run publishing:prepareFiles && cd ./dist && npm publish && cd ../ && rm -rf ./dist",
+    "publishing:patch": "pnpm run publishing:check && cd ./packages/next-content-builder && npm version patch && git commit --m 'new major version' -a && git push && cd ../../ && pnpm run publishing:prepareFiles && cd ./dist && npm publish && cd ../ && rm -rf ./dist",
+    "publishing:minor": "pnpm run publishing:check && cd ./packages/next-content-builder && npm version minor && git commit --m 'new major version' -a && git push && cd ../../ && pnpm run publishing:prepareFiles && cd ./dist && npm publish && cd ../ && rm -rf ./dist",
+    "publishing:major": "pnpm run publishing:check && cd ./packages/next-content-builder && npm version major && git commit --m 'new major version' -a && git push && cd ../../ && pnpm run publishing:prepareFiles && cd ./dist && npm publish && cd ../ && rm -rf ./dist",
     "publishing:check": "git diff --exit-code --name-only && git checkout master && git pull",
-    "publishing:prepareFiles": "rm -rf ./dist && cp -r ./packages/next-page-builder ./dist"
+    "publishing:prepareFiles": "rm -rf ./dist && cp -r ./packages/next-content-builder ./dist"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

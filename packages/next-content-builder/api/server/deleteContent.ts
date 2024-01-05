@@ -26,11 +26,13 @@ export async function deleteContent<T extends ContentType>(
   if (deleted instanceof Error) throw deleted;
 
   // Revalidate the cache
-  revalidateTag(`next-page-builder-contentType-${contentType.name}-${realId}`); // revalidate the page
   revalidateTag(
-    `next-page-builder-contentType-${contentType.name}-content-key`
+    `next-content-builder-contentType-${contentType.name}-${realId}`
+  ); // revalidate the page
+  revalidateTag(
+    `next-content-builder-contentType-${contentType.name}-content-key`
   ); // Revalidate the content key (used to get the real id)
-  revalidateTag(`next-page-builder-contentType-${contentType.name}-search`); // revalidate the search
+  revalidateTag(`next-content-builder-contentType-${contentType.name}-search`); // revalidate the search
 
   return { status: true, error: null };
 }

@@ -104,8 +104,10 @@ export async function editContent<T extends ContentType>(
   if (edited instanceof Error) throw edited;
 
   // Revalidate the cache
-  revalidateTag(`next-page-builder-contentType-${contentType.name}-${realId}`); // revalidate the page
-  revalidateTag(`next-page-builder-contentType-${contentType.name}-search`); // revalidate the search
+  revalidateTag(
+    `next-content-builder-contentType-${contentType.name}-${realId}`
+  ); // revalidate the page
+  revalidateTag(`next-content-builder-contentType-${contentType.name}-search`); // revalidate the search
 
   // Execute the afterUpdatingContent middleware if it exists
   try {

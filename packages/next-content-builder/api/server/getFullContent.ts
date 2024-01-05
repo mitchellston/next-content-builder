@@ -21,12 +21,12 @@ export async function getFullContent<T extends ContentType>(
         async () =>
           await contentType.databaseProvider.getFullContent(contentId),
         [
-          `next-page-builder-contentType-${contentType.name}-content-page`,
-          `next-page-builder-contentType-${contentType.name}-${contentId}`,
+          `next-content-builder-contentType-${contentType.name}-content-page`,
+          `next-content-builder-contentType-${contentType.name}-${contentId}`,
         ],
         {
           tags: [
-            `next-page-builder-contentType-${contentType.name}-${contentId}`,
+            `next-content-builder-contentType-${contentType.name}-${contentId}`,
           ],
         }
       )()
