@@ -1,0 +1,24 @@
+{
+  "name": "next-page-builder",
+  "version": "0.0.1",
+  "description": "",
+  "private": false,
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^17.0.12",
+    "@types/react": "^18.2.14",
+    "next": "^14.0.3",
+    "react": "^18.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "databaseProviders": "workspace:*",
+    "searchProviders": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": ">=14.0.0"
+  }
+}
