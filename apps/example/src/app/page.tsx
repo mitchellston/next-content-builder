@@ -9,13 +9,13 @@ export default function Page(): JSX.Element {
       <Search
         contentType={test}
         ammount={2}
-        LoaderComponent={InfiniteLoader}
-        // page={0}
-        mode="infinite"
+        // LoaderComponent={InfiniteLoader}
+        page={0}
+        mode="paginated"
         search={{}}
         returnValues={{ title: true }}
-        clientComponent={infiniteSearchComponent}
-        // children={(val) => <p>{val.title}</p>}
+        // clientComponent={infiniteSearchComponent}
+        children={(val) => <p>{val.title}</p>}
       />
     </main>
   );

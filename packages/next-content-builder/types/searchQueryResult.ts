@@ -5,12 +5,20 @@ export type SearchQueryResult<
   R extends Partial<{ [key in keyof T["values"]]: true }>,
 > = {
   [key in keyof R]: R[key] extends true
-    ? T["values"][key] extends {
-        type: infer Ttype;
-      }
-      ? Ttype extends "client-value"
-        ? Awaited<ReturnType<T["values"][key]["validate"]>>
-        : Awaited<ReturnType<T["values"][key]["compute"]>>
+    ? key extends infer Key extends keyof T["values"]
+      ? T["values"][Key] extends infer T
+        ? T extends {
+            validate: (input: unknown) => infer U;
+            type: "client-value";
+          }
+          ? Awaited<U>
+          : T extends {
+                validate: (input: unknown) => infer U;
+                type: "client-value";
+              }
+            ? Awaited<U>
+            : never
+        : never
       : never
     : never;
 } & { id: string | number };
