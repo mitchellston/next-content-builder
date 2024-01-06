@@ -13,9 +13,13 @@ export async function search<
   contentType: T,
   returnValues: R,
   search: CS,
-  settings: {
-    ammount: number;
-  } & V,
+  settings:
+    | {
+        mode: "pagination";
+        page?: number;
+        ammount: number;
+      }
+    | { mode: "infinite"; ammount: number; cursor?: string | number },
   cache: boolean = true
 ): Promise<ReturnType<T, R, V>> {
   // If cache is true, get the from cache or cache the content
@@ -24,10 +28,7 @@ export async function search<
       async () =>
         (await contentType.searchProvider.search(search, returnValues, {
           ammount: settings.ammount,
-          mode:
-            "cursor" in settings && !("page" in settings)
-              ? "infinite"
-              : "pagination",
+          mode: settings.mode,
           page: "page" in settings ? settings.page ?? 0 : undefined,
           cursor: "cursor" in settings ? settings.cursor : undefined,
         })) as ReturnType<T, R, V>,

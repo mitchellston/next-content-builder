@@ -72,6 +72,7 @@ export async function Search<
       {
         ammount: props.ammount,
         cursor,
+        mode: "infinite",
       },
       shouldCache(props.mode, "subsequent", props.dynamic)
     );
@@ -85,10 +86,11 @@ export async function Search<
     props.search,
     props.mode === "paginated"
       ? {
+          mode: "pagination",
           ammount: props.ammount,
-          page: props.mode === "paginated" ? props.page : undefined,
+          page: props.mode === "paginated" ? props.page : 0,
         }
-      : { ammount: props.ammount },
+      : { mode: "infinite", ammount: props.ammount },
     shouldCache(props.mode, "initial", props.dynamic)
   );
 

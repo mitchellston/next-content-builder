@@ -13,7 +13,6 @@ export async function createAndEditContent<T extends ContentType>(
 ) {
   // Delete old errors
   if (cookies().has("form-errors")) cookies().delete("form-errors");
-  console.log("HEELLO");
   // Error object which contains all the errors from validation
   let errors = {} as
     | ({

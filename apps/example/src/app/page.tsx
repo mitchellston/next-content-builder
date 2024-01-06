@@ -8,12 +8,12 @@ export default function Page(): JSX.Element {
       <Search
         contentType={test}
         ammount={2}
-        page={0}
-        mode="paginated"
-        search={{ title: { like: "p" } }}
+        // page={0}
+        mode="infinite"
+        search={{}}
         returnValues={{ title: true }}
-        // clientComponent={infiniteSearchComponent}
-        children={(val) => <p>{val.title}</p>}
+        clientComponent={infiniteSearchComponent}
+        // children={(val) => <p>{val.title}</p>}
       />
     </main>
   );

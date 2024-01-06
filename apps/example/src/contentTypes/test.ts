@@ -208,29 +208,32 @@ export const test = contentType(
         data = await prisma.$queryRawUnsafe<object[]>(sql, ...vars);
         // get the next cursor if there is one
         const lastItem = data.length > selector.ammount ? data.pop() : {};
-        const nextCursor =
-          lastItem && "id" in lastItem ? lastItem.id ?? null : null;
+        nextCursor = lastItem && "id" in lastItem ? lastItem.id ?? null : null;
         // return the data
       } else if (selector.mode === "pagination") {
         const sql = `SELECT ${Object.entries(returnValues)
           .map(([], index) => `data ->> $${index + 1} AS "${index}data"`)
-          .join(", ")} FROM test_content_type WHERE ${Object.entries(query)
-          .map(([, value]) =>
-            Object.entries(value)
-              .map(([operator], index) =>
-                createOperation(
-                  operator,
-                  `$${Object.entries(returnValues).length + (index + 1)}`,
-                  `$${
-                    Object.entries(returnValues).length +
-                    Object.entries(value).length +
-                    (index + 1)
-                  }`
+          .join(", ")} FROM test_content_type ${
+          Object.keys(query).length > 0
+            ? `WHERE ${Object.entries(query)
+                .map(([, value]) =>
+                  Object.entries(value)
+                    .map(([operator], index) =>
+                      createOperation(
+                        operator,
+                        `$${Object.entries(returnValues).length + (index + 1)}`,
+                        `$${
+                          Object.entries(returnValues).length +
+                          Object.entries(value).length +
+                          (index + 1)
+                        }`
+                      )
+                    )
+                    .join(" AND ")
                 )
-              )
-              .join(" AND ")
-          )
-          .join(" AND ")} LIMIT $${vars.length + 1} OFFSET $${vars.length + 2}`;
+                .join(" AND ")}`
+            : ""
+        } LIMIT $${vars.length + 1} OFFSET $${vars.length + 2}`;
         vars.push(selector.ammount);
         vars.push((selector.page ?? 0) * selector.ammount);
         data = await prisma.$queryRawUnsafe<object[]>(sql, ...vars);
