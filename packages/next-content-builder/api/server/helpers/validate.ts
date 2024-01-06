@@ -40,22 +40,23 @@ export const validateValues = async <T extends ContentType>(
         : null;
     // check if there are multiple inputs
     if (Array.isArray(dataFromValues)) {
+      const array = dataFromValues as unknown[];
       // if the input is not allowed to be used multiple times
-      if (typeof data.multiple == "string" || data.multiple == undefined) {
+      if (typeof data.multiple === "string" || data.multiple == undefined) {
         addError(
           errors,
           realKey,
-          data.multiple ?? "This input can not be used multiple times"
+          typeof data.multiple === "string"
+            ? data.multiple
+            : "This input can not be used multiple times"
         );
         continue;
       }
       // check if the input is used too many times or too few times
       if (
         typeof data.multiple == "object" &&
-        ((data.multiple.max &&
-          dataFromValues.length > data.multiple.max.value) ||
-          (data.multiple.min &&
-            dataFromValues.length < data.multiple.min.value))
+        ((data.multiple.max && array.length > data.multiple.max.value) ||
+          (data.multiple.min && array.length < data.multiple.min.value))
       ) {
         addError(
           errors,
