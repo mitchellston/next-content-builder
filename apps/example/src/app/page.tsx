@@ -1,6 +1,7 @@
 import { Search } from "next-content-builder";
 import { test } from "~/contentTypes/test";
 import { infiniteSearchComponent } from "./infiniteSearchComponent";
+import { InfiniteLoader } from "./infiniteLoader";
 
 export default function Page(): JSX.Element {
   return (
@@ -8,6 +9,7 @@ export default function Page(): JSX.Element {
       <Search
         contentType={test}
         ammount={2}
+        LoaderComponent={InfiniteLoader}
         // page={0}
         mode="infinite"
         search={{}}

@@ -2,7 +2,6 @@ import "server-only";
 import { getContentType } from "../../api/server/helpers/getContentType";
 import { ContentType } from "../../contentType";
 import { ComplexSearchQuery } from "../../types/complexSearchQueries";
-import { InfiniteLoader } from "./infiniteLoader";
 import { SearchQueryResult } from "../../types/searchQueryResult";
 import { search } from "../../api/server/search";
 import { shouldCache } from "./shouldCache";
@@ -34,6 +33,19 @@ type props<
       clientComponent: (
         values: SearchQueryResult<T, R>
       ) => JSX.Element | JSX.Element[];
+      LoaderComponent: (props: {
+        clientComponent: (
+          values: SearchQueryResult<T, R>
+        ) => JSX.Element | JSX.Element[];
+        subsequentSearches: (cursor: string | number) => Promise<{
+          nextCursor: string | number | null;
+          data: SearchQueryResult<T, R>[];
+        }>;
+        initialData: {
+          nextCursor: string | number | null;
+          data: SearchQueryResult<T, R>[];
+        };
+      }) => JSX.Element;
     }
   | {
       mode: "paginated";
@@ -101,11 +113,12 @@ export async function Search<
   // if the mode is infinite, return the infinite loader + the client component
   if (props.mode === "infinite")
     return (
-      <InfiniteLoader<typeof contentType, typeof props.returnValues>
+      <props.LoaderComponent
+        //<typeof contentType, typeof props.returnValues>
         initialData={results as any}
         clientComponent={props.clientComponent}
         subsequentSearches={subsequentSearches as any}
-      ></InfiniteLoader>
+      ></props.LoaderComponent>
     );
 
   // if the mode is paginated, return the component
