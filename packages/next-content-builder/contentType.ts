@@ -29,7 +29,11 @@ export type Value<T, Key extends keyof T> =
        *
        * **What this function returns gets stored in the database**
        */
-      validate: (value: unknown) => T[Key];
+      validate: (
+        value: unknown,
+        /** When a user is editing content this will contain data */
+        info: { oldValue: unknown; contentId: string | number | null } | null
+      ) => T[Key];
       /**
        * The maximum and minimum number of times this input can be used
        *
@@ -60,7 +64,10 @@ export type Value<T, Key extends keyof T> =
        *
        * **What this function returns gets stored in the database**
        */
-      compute: () => T[Key];
+      compute: (
+        /** When a user is editing content this will contain data */
+        info: { oldValue: unknown; contentId: string | number | null } | null
+      ) => T[Key];
     };
 
 export type SearchProvider = {

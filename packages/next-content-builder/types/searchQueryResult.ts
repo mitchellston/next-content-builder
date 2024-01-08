@@ -8,12 +8,24 @@ export type SearchQueryResult<
     ? key extends infer Key extends keyof T["values"]
       ? T["values"][Key] extends infer T
         ? T extends {
-            validate: (input: unknown) => infer U;
+            validate: (
+              input: unknown,
+              info: {
+                oldValue: unknown;
+                contentId: string | number | null;
+              } | null
+            ) => infer U;
             type: "client-value";
           }
           ? Awaited<U>
           : T extends {
-                validate: (input: unknown) => infer U;
+                validate: (
+                  input: unknown,
+                  info: {
+                    oldValue: unknown;
+                    contentId: string | number | null;
+                  } | null
+                ) => infer U;
                 type: "client-value";
               }
             ? Awaited<U>

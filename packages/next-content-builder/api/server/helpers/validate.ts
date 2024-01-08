@@ -8,7 +8,8 @@ export const validateValues = async <T extends ContentType>(
   contentType: T,
   values:
     | { values: Content<T>; canBeEmpty?: false }
-    | { values: Partial<Content<T>>; canBeEmpty: true }
+    | { values: Partial<Content<T>>; canBeEmpty: true },
+  oldValues: { id: string | number; oldValues: object } | null = null
 ) => {
   const errors: Partial<
     { [Key in keyof T["values"]]: string[] } & { General: string[] }
@@ -23,7 +24,17 @@ export const validateValues = async <T extends ContentType>(
       promises.push(
         new Promise(async (resolve) => {
           try {
-            resolve({ value: await data.compute(), key: realKey });
+            resolve({
+              value: await data.compute(
+                oldValues?.oldValues[key]
+                  ? {
+                      oldValue: oldValues.oldValues[key],
+                      contentId: oldValues.id,
+                    }
+                  : null
+              ),
+              key: realKey,
+            });
           } catch (e) {
             addError(errors, realKey, errorGetter(e));
             resolve(null);
@@ -74,7 +85,18 @@ export const validateValues = async <T extends ContentType>(
     promises.push(
       new Promise(async (resolve) => {
         try {
-          resolve({ value: await data.validate(dataFromValues), key: realKey });
+          resolve({
+            value: await data.validate(
+              dataFromValues,
+              oldValues?.oldValues[key]
+                ? {
+                    oldValue: oldValues.oldValues[key],
+                    contentId: oldValues.id,
+                  }
+                : null
+            ),
+            key: realKey,
+          });
         } catch (e) {
           addError(errors, realKey, errorGetter(e));
           resolve(null);

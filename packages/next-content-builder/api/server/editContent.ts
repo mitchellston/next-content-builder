@@ -22,7 +22,11 @@ export async function editContent<T extends ContentType>(
     validate?: boolean;
   }
 ) {
-  const oldContent = await getFullContent(contentType, id, false);
+  // Get the real id
+  const realId = await getRealId(contentType, id);
+  if (realId === false) throw new Error("Content not found");
+
+  const oldContent = await getFullContent(contentType, realId, true);
 
   // Execute both the beforeUpdatingContent and beforeValidatingUpdatedContent middleware
   try {
@@ -48,10 +52,14 @@ export async function editContent<T extends ContentType>(
 
   const validated =
     values.validate ?? true
-      ? await validateValues(contentType, {
-          values: values.values,
-          canBeEmpty: true,
-        })
+      ? await validateValues(
+          contentType,
+          {
+            values: values.values,
+            canBeEmpty: true,
+          },
+          { oldValues: oldContent, id: realId }
+        )
       : { errors: {}, values: values.values };
 
   // Execute the afterValidatingNewContent middleware if needed (and if it exists)
@@ -91,10 +99,6 @@ export async function editContent<T extends ContentType>(
     // Stop the function and return the errors
     return { errors: validated.errors, id: null };
   }
-
-  // Get the real id
-  const realId = await getRealId(contentType, id);
-  if (realId === false) throw new Error("Content not found");
 
   // Edit the content
   const edited = await contentType.databaseProvider.editContent(

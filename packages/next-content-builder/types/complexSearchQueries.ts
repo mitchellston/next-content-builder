@@ -4,12 +4,23 @@ export type ComplexSearchQuery<T extends ContentType> = Partial<{
   [Key in keyof T["values"]]: T["values"][Key] extends infer T
     ? Awaited<
         T extends {
-          validate: (input: unknown) => infer U;
+          validate: (
+            input: unknown,
+            info: {
+              oldValue: unknown;
+              contentId: string | number | null;
+            } | null
+          ) => infer U;
           type: "client-value";
         }
           ? U
           : T extends {
-                compute: (input: unknown) => infer U;
+                compute: (
+                  info: {
+                    oldValue: unknown;
+                    contentId: string | number | null;
+                  } | null
+                ) => infer U;
                 type: "server-computed-value";
               }
             ? U
@@ -22,12 +33,23 @@ export type ComplexSearchQuery<T extends ContentType> = Partial<{
         }
       : Awaited<
             T extends {
-              validate: (input: unknown) => infer U;
+              validate: (
+                input: unknown,
+                info: {
+                  oldValue: unknown;
+                  contentId: string | number | null;
+                } | null
+              ) => infer U;
               type: "client-value";
             }
               ? U
               : T extends {
-                    compute: (input: unknown) => infer U;
+                    compute: (
+                      info: {
+                        oldValue: unknown;
+                        contentId: string | number | null;
+                      } | null
+                    ) => infer U;
                     type: "server-computed-value";
                   }
                 ? U
@@ -43,12 +65,23 @@ export type ComplexSearchQuery<T extends ContentType> = Partial<{
           }
         : Awaited<
               T extends {
-                validate: (input: unknown) => infer U;
+                validate: (
+                  input: unknown,
+                  info: {
+                    oldValue: unknown;
+                    contentId: string | number | null;
+                  } | null
+                ) => infer U;
                 type: "client-value";
               }
                 ? U
                 : T extends {
-                      compute: (input: unknown) => infer U;
+                      compute: (
+                        info: {
+                          oldValue: unknown;
+                          contentId: string | number | null;
+                        } | null
+                      ) => infer U;
                       type: "server-computed-value";
                     }
                   ? U
@@ -60,12 +93,23 @@ export type ComplexSearchQuery<T extends ContentType> = Partial<{
             }
           : Awaited<
                 T extends {
-                  validate: (input: unknown) => infer U;
+                  validate: (
+                    input: unknown,
+                    info: {
+                      oldValue: unknown;
+                      contentId: string | number | null;
+                    } | null
+                  ) => infer U;
                   type: "client-value";
                 }
                   ? U
                   : T extends {
-                        compute: (input: unknown) => infer U;
+                        compute: (
+                          info: {
+                            oldValue: unknown;
+                            contentId: string | number | null;
+                          } | null
+                        ) => infer U;
                         type: "server-computed-value";
                       }
                     ? U
@@ -81,12 +125,23 @@ export type ComplexSearchQuery<T extends ContentType> = Partial<{
               }
             : Awaited<
                   T extends {
-                    validate: (input: unknown) => infer U;
+                    validate: (
+                      input: unknown,
+                      info: {
+                        oldValue: unknown;
+                        contentId: string | number | null;
+                      } | null
+                    ) => infer U;
                     type: "client-value";
                   }
                     ? U
                     : T extends {
-                          compute: (input: unknown) => infer U;
+                          compute: (
+                            info: {
+                              oldValue: unknown;
+                              contentId: string | number | null;
+                            } | null
+                          ) => infer U;
                           type: "server-computed-value";
                         }
                       ? U
@@ -99,12 +154,23 @@ export type ComplexSearchQuery<T extends ContentType> = Partial<{
               : {
                   eq?: Awaited<
                     T extends {
-                      validate: (input: unknown) => infer U;
+                      validate: (
+                        input: unknown,
+                        info: {
+                          oldValue: unknown;
+                          contentId: string | number | null;
+                        } | null
+                      ) => infer U;
                       type: "client-value";
                     }
                       ? U
                       : T extends {
-                            compute: (input: unknown) => infer U;
+                            compute: (
+                              info: {
+                                oldValue: unknown;
+                                contentId: string | number | null;
+                              } | null
+                            ) => infer U;
                             type: "server-computed-value";
                           }
                         ? U
@@ -112,12 +178,23 @@ export type ComplexSearchQuery<T extends ContentType> = Partial<{
                   >;
                   neq?: Awaited<
                     T extends {
-                      validate: (input: unknown) => infer U;
+                      validate: (
+                        input: unknown,
+                        info: {
+                          oldValue: unknown;
+                          contentId: string | number | null;
+                        } | null
+                      ) => infer U;
                       type: "client-value";
                     }
                       ? U
                       : T extends {
-                            compute: (input: unknown) => infer U;
+                            compute: (
+                              info: {
+                                oldValue: unknown;
+                                contentId: string | number | null;
+                              } | null
+                            ) => infer U;
                             type: "server-computed-value";
                           }
                         ? U

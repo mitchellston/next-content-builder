@@ -7,7 +7,7 @@ export const test = contentType(
   {
     title: {
       type: "client-value",
-      validate: async (title: unknown) => {
+      validate: async (title: unknown, info) => {
         "use server";
         if (typeof title !== "string")
           throw new Error("Title must be a string");
@@ -20,6 +20,7 @@ export const test = contentType(
         "use server";
         if (typeof description !== "string")
           throw new Error("Description must be a string");
+
         return description;
       },
     },
@@ -154,7 +155,7 @@ export const test = contentType(
         }, [] as any[]),
       ];
       let data: object[] = [];
-      let nextCursor = null;
+      let nextCursor: string | number | null = null;
       if (selector.mode === "infinite") {
         // sql query
         const sql =
@@ -208,7 +209,12 @@ export const test = contentType(
         data = await prisma.$queryRawUnsafe<object[]>(sql, ...vars);
         // get the next cursor if there is one
         const lastItem = data.length > selector.ammount ? data.pop() : {};
-        nextCursor = lastItem && "id" in lastItem ? lastItem.id ?? null : null;
+        nextCursor =
+          lastItem &&
+          "id" in lastItem &&
+          (typeof lastItem.id == "string" || typeof lastItem.id == "number")
+            ? lastItem.id ?? null
+            : null;
         // return the data
       } else if (selector.mode === "pagination") {
         const sql = `SELECT ${Object.entries(returnValues)
