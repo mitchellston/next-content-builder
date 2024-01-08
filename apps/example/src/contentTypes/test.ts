@@ -11,8 +11,10 @@ export const test = contentType(
         "use server";
         if (typeof title !== "string")
           throw new Error("Title must be a string");
+
         return title;
       },
+      multiple: {},
     },
     description: {
       type: "client-value",

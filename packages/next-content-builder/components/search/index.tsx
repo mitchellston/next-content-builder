@@ -33,6 +33,14 @@ type props<
       clientComponent: (
         values: SearchQueryResult<T, R>
       ) => JSX.Element | JSX.Element[];
+      /**
+       * The client component in infinite mode gets surounded by a div so that it can be used as ref.
+       *
+       * By enabling this prop, the ref will be passed to the client component instead of the div. Meaning that the div will not be rendered.
+       *
+       * @default false
+       */
+      childHandlesRef?: boolean;
       LoaderComponent: (props: {
         clientComponent: (
           values: SearchQueryResult<T, R>
@@ -45,6 +53,7 @@ type props<
           nextCursor: string | number | null;
           data: SearchQueryResult<T, R>[];
         };
+        childHandlesRef?: boolean;
       }) => JSX.Element;
     }
   | {
@@ -118,6 +127,7 @@ export async function Search<
         initialData={results as any}
         clientComponent={props.clientComponent}
         subsequentSearches={subsequentSearches as any}
+        childHandlesRef={props.childHandlesRef}
       ></props.LoaderComponent>
     );
 

@@ -18,13 +18,14 @@ type props<
     nextCursor: string | number | null;
     data: SearchQueryResult<T, R>[];
   };
+  childHandlesRef?: boolean;
 };
 export function InfiniteLoader<
   T extends ContentType,
   R extends Partial<{ [key in keyof T["values"]]: true }>,
->(props: props<T, R>) {
+>(Props: props<T, R>) {
   // create state to store data + set initial data from server
-  const [data, setData] = useState([props.initialData]);
+  const [data, setData] = useState([Props.initialData]);
   // ref to last rendered component
   const lastComponent = useRef<LegacyRef<HTMLDivElement>>(null);
   // fun
@@ -37,7 +38,7 @@ export function InfiniteLoader<
           const last = data[data.length - 1];
           if (last && last.nextCursor) {
             // loads more data and adds it to the state
-            await props.subsequentSearches(last.nextCursor).then((v) => {
+            await Props.subsequentSearches(last.nextCursor).then((v) => {
               setData([...data, v]);
             });
           }
@@ -52,7 +53,14 @@ export function InfiniteLoader<
 
   // uses a flatmap to flatten the data (from array of arrays to array)
   const _components = data.flatMap((v) => v.data);
-
+  if (Props.childHandlesRef)
+    return (
+      <>
+        {_components.map((data, i) => (
+          <Props.clientComponent ref={lastComponent} {...data} />
+        ))}
+      </>
+    );
   return (
     <>
       {_components.map((data, i) => (
@@ -63,7 +71,7 @@ export function InfiniteLoader<
           }}
           key={i}
         >
-          {props.clientComponent(data)}
+          {Props.clientComponent(data)}
         </div>
       ))}
     </>
