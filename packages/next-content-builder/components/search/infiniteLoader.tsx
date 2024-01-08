@@ -57,7 +57,13 @@ export function InfiniteLoader<
     return (
       <>
         {_components.map((data, i) => (
-          <Props.clientComponent ref={lastComponent} {...data} />
+          <>
+            {i === _components.length - 1 ? (
+              <Props.clientComponent ref={lastComponent} {...data} />
+            ) : (
+              <Props.clientComponent {...data} />
+            )}
+          </>
         ))}
       </>
     );
