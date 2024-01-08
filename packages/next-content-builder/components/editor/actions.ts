@@ -24,6 +24,9 @@ export async function createAndEditContent<T extends ContentType>(
 
   let values: { [key: string]: unknown } = {};
   inputs.forEach((value, key) => {
+    if (values[key])
+      if (Array.isArray(values[key])) (values[key] as unknown[]).push(value);
+      else values[key] = [values[key], value];
     values[key] = value;
   });
 
