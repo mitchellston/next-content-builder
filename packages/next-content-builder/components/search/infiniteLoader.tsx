@@ -30,13 +30,14 @@ export function InfiniteLoader<
   const lastComponent = useRef<LegacyRef<HTMLDivElement>>(null);
   // fun
   useEffect(() => {
-    if (lastComponent && lastComponent.current) {
+    if (lastComponent?.current) {
       // create a observer to watch the last rendered component
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const observer = new IntersectionObserver(async (entries) => {
         // if the last rendered component is intersecting, load more data
         if (entries[0] && entries[0].isIntersecting) {
           const last = data[data.length - 1];
-          if (last && last.nextCursor) {
+          if (last?.nextCursor) {
             // loads more data and adds it to the state
             await Props.subsequentSearches(last.nextCursor).then((v) => {
               setData([...data, v]);
@@ -59,9 +60,13 @@ export function InfiniteLoader<
         {_components.map((data, i) => (
           <>
             {i === _components.length - 1 ? (
-              <Props.clientComponent ref={lastComponent} {...data} />
+              <Props.clientComponent
+                key={i}
+                {...data}
+                childerensRef={lastComponent}
+              />
             ) : (
-              <Props.clientComponent {...data} />
+              <Props.clientComponent key={i} {...data} />
             )}
           </>
         ))}
