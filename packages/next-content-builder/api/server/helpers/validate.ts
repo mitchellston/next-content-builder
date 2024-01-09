@@ -26,9 +26,9 @@ export const validateValues = async <T extends ContentType>(
           try {
             resolve({
               value: await data.compute(
-                oldValues?.oldValues[key]
+                oldValues?.oldValues[realKey]
                   ? {
-                      oldValue: oldValues.oldValues[key],
+                      oldValue: oldValues.oldValues[realKey],
                       contentId: oldValues.id,
                     }
                   : null
@@ -88,9 +88,9 @@ export const validateValues = async <T extends ContentType>(
           resolve({
             value: await data.validate(
               dataFromValues,
-              oldValues?.oldValues[key]
+              oldValues?.oldValues[realKey]
                 ? {
-                    oldValue: oldValues.oldValues[key],
+                    oldValue: oldValues.oldValues[realKey],
                     contentId: oldValues.id,
                   }
                 : null

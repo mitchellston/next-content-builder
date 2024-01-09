@@ -7,6 +7,7 @@ import { getRealId } from "./helpers/getRealId";
 import { validateValues } from "./helpers/validate";
 import { errorGetter } from "./helpers/errorGetter";
 import { getFullContent } from "./getFullContent";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function editContent<T extends ContentType>(
   contentType: T,
@@ -42,6 +43,7 @@ export async function editContent<T extends ContentType>(
         values.values
       );
   } catch (e) {
+    if (isRedirectError(e)) throw e;
     return {
       errors: {
         General: [errorGetter(e)],
@@ -73,6 +75,7 @@ export async function editContent<T extends ContentType>(
         validated.errors
       );
   } catch (e) {
+    if (isRedirectError(e)) throw e;
     return {
       errors: {
         General: [errorGetter(e)],
@@ -88,6 +91,7 @@ export async function editContent<T extends ContentType>(
       if (contentType.middlewares?.afterUpdatingContent)
         await contentType.middlewares.afterUpdatingContent({ status: false });
     } catch (e) {
+      if (isRedirectError(e)) throw e;
       return {
         errors: {
           General: [errorGetter(e)],
@@ -121,6 +125,7 @@ export async function editContent<T extends ContentType>(
         id: realId,
       });
   } catch (e) {
+    if (isRedirectError(e)) throw e;
     contentType.databaseProvider.editContent(realId, oldContent);
     return {
       errors: {

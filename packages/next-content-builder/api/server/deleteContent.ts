@@ -4,6 +4,7 @@ import { Id } from "../../types/id";
 import { getRealId } from "./helpers/getRealId";
 import { revalidateTag } from "next/cache";
 import { errorGetter } from "./helpers/errorGetter";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function deleteContent<T extends ContentType>(
   contentType: T,
@@ -14,6 +15,7 @@ export async function deleteContent<T extends ContentType>(
     if (contentType.middlewares?.beforeDeletingContent)
       await contentType.middlewares.beforeDeletingContent();
   } catch (e) {
+    if (isRedirectError(e)) throw e;
     return { status: false, error: errorGetter(e) };
   }
 

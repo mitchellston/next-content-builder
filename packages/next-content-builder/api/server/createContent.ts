@@ -4,6 +4,7 @@ import { Content } from "../../types/content";
 import { revalidateTag } from "next/cache";
 import { validateValues } from "./helpers/validate";
 import { errorGetter } from "./helpers/errorGetter";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export async function createContent<T extends ContentType>(
   contentType: T,
@@ -34,6 +35,7 @@ export async function createContent<T extends ContentType>(
         clientValues.values
       );
   } catch (e) {
+    if (isRedirectError(e)) throw e;
     return {
       errors: {
         General: [errorGetter(e)],
@@ -59,6 +61,7 @@ export async function createContent<T extends ContentType>(
         validated.errors
       );
   } catch (e) {
+    if (isRedirectError(e)) throw e;
     return {
       errors: {
         General: [errorGetter(e)],
@@ -74,6 +77,7 @@ export async function createContent<T extends ContentType>(
       if (contentType.middlewares?.afterCreatingContent)
         await contentType.middlewares.afterCreatingContent({ status: false });
     } catch (e) {
+      if (isRedirectError(e)) throw e;
       return {
         errors: {
           General: [errorGetter(e)],
@@ -102,6 +106,7 @@ export async function createContent<T extends ContentType>(
     if (contentType.middlewares?.afterCreatingContent)
       await contentType.middlewares.afterCreatingContent({ status: true, id });
   } catch (e) {
+    if (isRedirectError(e)) throw e;
     contentType.databaseProvider.deleteContent(id);
     return {
       errors: {
