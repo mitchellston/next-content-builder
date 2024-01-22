@@ -49,7 +49,12 @@ export async function createContent<T extends ContentType>(
     clientValues.validate ?? true
       ? await validateValues(contentType, { values: clientValues.values })
       : { errors: {}, values: clientValues.values };
-
+  // if there is an error, return it
+  if (Object.keys(validated.errors).length > 0)
+    return {
+      errors: validated.errors,
+      id: null,
+    };
   // Execute the afterValidatingNewContent middleware if needed (and if it exists)
   try {
     if (

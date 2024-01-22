@@ -63,6 +63,8 @@ export async function editContent<T extends ContentType>(
           { oldValues: oldContent, id: realId }
         )
       : { errors: {}, values: values.values };
+  if (Object.keys(validated.errors).length > 0)
+    return { errors: validated.errors, id: null };
 
   // Execute the afterValidatingNewContent middleware if needed (and if it exists)
   try {
