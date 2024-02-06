@@ -1,6 +1,6 @@
 {
   "name": "next-content-builder",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A system to easily allow users on your site to create content without the need for a CMS. Made for Next.js 14.0.0+",
   "private": false,
   "keywords": [],
