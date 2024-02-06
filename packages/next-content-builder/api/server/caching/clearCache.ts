@@ -1,5 +1,5 @@
 import { revalidateTag } from "next/cache";
-import { ContentType } from "../../contentType";
+import { ContentType } from "../../../contentType";
 
 export async function clearCache(contentType: ContentType) {
   // Revalidate the cache

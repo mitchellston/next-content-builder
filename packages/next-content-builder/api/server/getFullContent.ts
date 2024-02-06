@@ -27,6 +27,7 @@ export async function getFullContent<T extends ContentType>(
         {
           tags: [
             `next-content-builder-contentType-${contentType.name}-${contentId}`,
+            `next-content-builder-contentType-${contentType.name}-page`,
           ],
         }
       )()
