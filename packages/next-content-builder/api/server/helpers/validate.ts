@@ -87,7 +87,9 @@ export const validateValues = async <T extends ContentType>(
         try {
           resolve({
             value: await data.validate(
-              dataFromValues,
+              typeof dataFromValues === "string"
+                ? (dataFromValues as string).trim()
+                : dataFromValues,
               oldValues?.oldValues[realKey]
                 ? {
                     oldValue: oldValues.oldValues[realKey],
