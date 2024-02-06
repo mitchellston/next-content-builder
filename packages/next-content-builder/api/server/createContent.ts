@@ -1,5 +1,5 @@
 import "server-only";
-import { ContentType, Value } from "../../contentType";
+import { ContentType } from "../../contentType";
 import { Content } from "../../types/content";
 import { revalidateTag } from "next/cache";
 import { validateValues } from "./helpers/validate";
