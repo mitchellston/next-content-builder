@@ -27,4 +27,4 @@ export type Content<T extends ContentType> = {
         ? Awaited<U>
         : never
     : never;
-};
+} & { id: string | number };

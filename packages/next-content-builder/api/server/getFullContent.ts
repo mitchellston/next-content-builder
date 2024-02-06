@@ -37,5 +37,5 @@ export async function getFullContent<T extends ContentType>(
   if (content == null) throw new Error("Content not found");
 
   // Return the content
-  return content as Content<T>;
+  return { ...content, id: contentId } as Content<T>;
 }
