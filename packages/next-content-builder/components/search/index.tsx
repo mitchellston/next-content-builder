@@ -8,15 +8,17 @@ import { shouldCache } from "./shouldCache";
 
 type props<
   T extends ContentType,
-  CS extends ComplexSearchQuery<T>,
-  R extends Partial<{ [key in keyof T["values"]]: true }>,
+  SearchQuery extends ComplexSearchQuery<T>,
+  ReturnValues extends Partial<{ [key in keyof T["values"]]: true }>,
+  Order extends Partial<{ [key in keyof T["values"]]: "desc" | "asc" }>,
 > = {
   /** The content type to add content to. Can either be dynamically imported or directly imported */
   contentType: T | string;
   onNullContent?: JSX.Element | JSX.Element[];
   ammount: number;
-  search: CS;
-  returnValues: R;
+  search: SearchQuery;
+  returnValues: ReturnValues;
+  orderBy?: Order;
 } & (
   | {
       mode: "infinite";
@@ -31,7 +33,7 @@ type props<
        */
       dynamic?: "all" | "subsequent" | "none";
       clientComponent: (
-        values: SearchQueryResult<T, R>
+        values: SearchQueryResult<T, ReturnValues>
       ) => JSX.Element | JSX.Element[];
       /**
        * The client component in infinite mode gets surounded by a div so that it can be used as ref.
@@ -43,15 +45,15 @@ type props<
       childHandlesRef?: boolean;
       LoaderComponent: (props: {
         clientComponent: (
-          values: SearchQueryResult<T, R>
+          values: SearchQueryResult<T, ReturnValues>
         ) => JSX.Element | JSX.Element[];
         subsequentSearches: (cursor: string | number) => Promise<{
           nextCursor: string | number | null;
-          data: SearchQueryResult<T, R>[];
+          data: SearchQueryResult<T, ReturnValues>[];
         }>;
         initialData: {
           nextCursor: string | number | null;
-          data: SearchQueryResult<T, R>[];
+          data: SearchQueryResult<T, ReturnValues>[];
         };
         childHandlesRef?: boolean;
       }) => JSX.Element;
@@ -68,7 +70,7 @@ type props<
        */
       dynamic?: boolean;
       children: (
-        values: SearchQueryResult<T, R>
+        values: SearchQueryResult<T, ReturnValues>
       ) => JSX.Element | JSX.Element[];
     }
 );
@@ -79,9 +81,10 @@ type props<
  */
 export async function Search<
   T extends ContentType,
-  CS extends ComplexSearchQuery<T>,
-  R extends Partial<{ [key in keyof T["values"]]: true }>,
->(props: props<T, CS, R>) {
+  SearchQuery extends ComplexSearchQuery<T>,
+  ReturnValues extends Partial<{ [key in keyof T["values"]]: true }>,
+  Order extends Partial<{ [key in keyof T["values"]]: "desc" | "asc" }>,
+>(props: props<T, SearchQuery, ReturnValues, Order>) {
   // subsequent searches are only used for infinite mode
   async function subsequentSearches(cursor: string | number) {
     "use server";
@@ -90,6 +93,7 @@ export async function Search<
       contentType,
       props.returnValues,
       props.search,
+      props.orderBy,
       {
         ammount: props.ammount,
         cursor,

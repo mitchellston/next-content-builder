@@ -74,6 +74,7 @@ export type SearchProvider = {
   search: (
     query: object,
     returnValues: object,
+    orderBy: object,
     selector: (
       | { mode: "infinite"; cursor?: string | number }
       | { mode: "pagination"; page?: number }
