@@ -242,9 +242,9 @@ export const test = contentType(
         // Order by
         if (Object.entries(orderBy).length > 0) {
           sql += ` ORDER BY `;
-          Object.entries(orderBy).map((_, index) => {
-            sql += `data ->> $${howManyToAdd + (index + 1)} $${
-              howManyToAdd + Object.entries(orderBy).length + (index + 1)
+          Object.entries(orderBy).map(([_, value], index) => {
+            sql += `data ->> $${howManyToAdd + (index + 1)} ${
+              value === "desc" ? "DESC" : "ASC"
             } `;
           });
           howManyToAdd += Object.entries(orderBy).length;
@@ -277,9 +277,9 @@ export const test = contentType(
         // Order by
         if (Object.entries(orderBy).length > 0) {
           sql += ` ORDER BY `;
-          Object.entries(orderBy).map((_, index) => {
-            sql += `data ->> $${howManyToAdd + (index + 1)} $${
-              howManyToAdd + Object.entries(orderBy).length + (index + 1)
+          Object.entries(orderBy).map(([_, value], index) => {
+            sql += `data ->> $${howManyToAdd + (index + 1)} ${
+              value === "desc" ? "DESC" : "ASC"
             } `;
           });
           howManyToAdd += Object.entries(orderBy).length;
