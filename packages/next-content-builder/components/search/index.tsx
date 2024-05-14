@@ -109,6 +109,7 @@ export async function Search<
     contentType,
     props.returnValues,
     props.search,
+    props.orderBy,
     props.mode === "paginated"
       ? {
           mode: "pagination",

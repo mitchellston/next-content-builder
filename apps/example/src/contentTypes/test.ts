@@ -162,9 +162,11 @@ export const test = contentType(
       // varables for sql parameters
       const vars = [
         // values to return (column names)
-        ...Object.entries(returnValues).map(([key, value]) => key),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        ...Object.entries(returnValues).map(([key]) => key),
         // where clause column names
-        ...Object.entries(query).map(([key, value]) => key),
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        ...Object.entries(query).map(([key]) => key),
         // where clause values
         // eslint-disable-next-line
         ...Object.entries(query).reduce((prev, [key, value]) => {
@@ -241,7 +243,7 @@ export const test = contentType(
         if (Object.entries(orderBy).length > 0) {
           sql += ` ORDER BY `;
           Object.entries(orderBy).map((_, index) => {
-            sql += `$${howManyToAdd + (index + 1)} ${
+            sql += `data ->> $${howManyToAdd + (index + 1)} $${
               howManyToAdd + Object.entries(orderBy).length + (index + 1)
             } `;
           });
@@ -276,7 +278,7 @@ export const test = contentType(
         if (Object.entries(orderBy).length > 0) {
           sql += ` ORDER BY `;
           Object.entries(orderBy).map((_, index) => {
-            sql += `$${howManyToAdd + (index + 1)} ${
+            sql += `data ->> $${howManyToAdd + (index + 1)} $${
               howManyToAdd + Object.entries(orderBy).length + (index + 1)
             } `;
           });
