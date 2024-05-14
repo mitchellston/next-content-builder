@@ -93,7 +93,7 @@ export async function Search<
       contentType,
       props.returnValues,
       props.search,
-      props.orderBy,
+      props.orderBy ?? {},
       {
         ammount: props.ammount,
         cursor,
@@ -109,7 +109,7 @@ export async function Search<
     contentType,
     props.returnValues,
     props.search,
-    props.orderBy,
+    props.orderBy ?? {},
     props.mode === "paginated"
       ? {
           mode: "pagination",
